@@ -1,0 +1,14 @@
+{
+  "name": "cli-app-template",
+  "description": "Template for creating CLI applications in Node.js",
+  "version": "0.0.1",
+  "author": {
+    "name": "Skitsanos",
+    "url": "https://github.com/skitsanos"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "winston": "^3.1.0"
+  }
+}
