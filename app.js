@@ -9,22 +9,45 @@
 const program = require('commander');
 const winston = require('winston');
 
+class FileTransport extends Transport
+{
+    constructor(opts)
+    {
+        super(opts);
+    }
+
+    log(info, callback)
+    {
+        fs.appendFile(process.cwd() + '/app.log', `${info.level} ${info.message}\n`, (err) =>
+        {
+            if (err)
+            {
+                console.log(err.message);
+            }
+        });
+        callback();
+    }
+}
+
+const loggingFormat = winston.format.combine(
+    winston.format.colorize(),
+    winston.format.splat(),
+    winston.format.printf(info =>
+    {
+        return ` ${(new Date()).getTime()} ${info.level}: ${info.message}`;
+    }));
+
 const log = winston.createLogger({
+    exitOnError: false,
     transports: [
-        //
-        // - Write to all logs with level `info` and below to `combined.log`
-        // - Write all logs error (and below) to `error.log`.
-        //
-        //new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        //new winston.transports.File({ filename: 'combined.log' })
+        new FileTransport(
+            {
+                format: loggingFormat,
+                timestamp: true
+            }
+        ),
         new winston.transports.Console({
-            format: winston.format.combine(
-                winston.format.colorize(),
-                winston.format.splat(),
-                winston.format.printf(info =>
-                {
-                    return ` ${(new Date()).getTime()} ${info.level}: ${info.message}`;
-                }))
+            format: loggingFormat
         })
     ]
 });
