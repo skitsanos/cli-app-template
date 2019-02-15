@@ -8,6 +8,7 @@
 
 const program = require('commander');
 const winston = require('winston');
+const Transport = require('winston-transport');
 
 class FileTransport extends Transport
 {
