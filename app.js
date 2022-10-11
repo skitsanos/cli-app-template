@@ -6,7 +6,7 @@
  * @author skitsanos
  */
 
-const program = require('commander');
+const {program} = require('commander');
 const winston = require('winston');
 const Transport = require('winston-transport');
 const fs = require('fs');
@@ -62,12 +62,21 @@ const app = {
         log.info(`${app.meta.name} ver. ${app.meta.version}`);
 
         program
-            .version(`${app.meta.version}`, '-v, --version')
-            .usage('-name -path')
-            .option('-a, --app <application name>', 'application name')
-            .parse(process.argv);
+        .version(`${app.meta.version}`, '-v, --version')
+        .usage('-name -path')
+        .option('-a, --app <application name>', 'application name', 'Unknown App')
+        .option('-d, --debug', 'Enable Debug mode')
+        .parse(process.argv);
+
+        const {app: applicationName, debug} = program.opts();
+
+        log.info(`Booting ${applicationName} ...`);
+
+        if (debug)
+        {
+            log.warn(`[${applicationName}]DEBUG mode enabled`);
+        }
     }
 };
-
 
 app.init();

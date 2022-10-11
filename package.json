@@ -1,14 +1,18 @@
 {
   "name": "cli-app-template",
   "description": "Template for creating CLI applications in Node.js",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "author": {
     "name": "Skitsanos",
     "url": "https://github.com/skitsanos"
   },
   "license": "MIT",
+  "scripts": {
+    "dev": "node app.js",
+    "build": "npx @vercel/ncc build app.js -o dist"
+  },
   "dependencies": {
-    "commander": "^2.19.0",
-    "winston": "^3.1.0"
+    "commander": "^9.4.1",
+    "winston": "^3.8.2"
   }
 }
